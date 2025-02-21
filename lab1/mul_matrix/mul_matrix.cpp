@@ -83,6 +83,7 @@ void mul_matrix(const std::string& path_to_matrix1, const std::string& path_to_m
         resultMatrix[i] = new int[size];
     }
 
+    unsigned int start_time = clock(); 
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             resultMatrix[i][j] = 0; 
@@ -91,7 +92,9 @@ void mul_matrix(const std::string& path_to_matrix1, const std::string& path_to_m
             }
         }
     }
+    unsigned int end_time = clock();
 
+    std::cout << "Time for " << size << "x" << size << " = " << (end_time - start_time) << "ms" << std::endl;
     writeMatrixToFile(path_to_result_matrix, resultMatrix, size);
 
     for (int i = 0; i < size; ++i) {
@@ -103,7 +106,7 @@ void mul_matrix(const std::string& path_to_matrix1, const std::string& path_to_m
     delete[] matrix2;
     delete[] resultMatrix;
 
-    std::cout << "Complete " << size << "x" << size << "!" << std::endl;
+    std::cout << "Complete " << size << "x" << size << "!" << std::endl << std::endl;
 }
 
 int main() {
