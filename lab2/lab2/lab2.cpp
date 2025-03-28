@@ -1,0 +1,128 @@
+#include <iostream>
+#include <omp.h>
+#include <fstream>
+
+void readMatrixFromFile(const std::string& filename, int**& matrix, int& size) {
+    std::ifstream inFile(filename);
+    if (!inFile) {
+        std::cerr << "Error!" << std::endl;
+        return;
+    }
+
+    inFile >> size;
+
+    matrix = new int* [size];
+    for (int i = 0; i < size; ++i) {
+        matrix[i] = new int[size];
+    }
+
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            inFile >> matrix[i][j];
+        }
+    }
+
+    inFile.close();
+}
+
+void writeMatrixToFile(const std::string& filename, int** matrix, int size) {
+    std::ofstream outFile(filename);
+    if (!outFile) {
+        std::cerr << "Error creating file: " << filename << std::endl;
+        return;
+    }
+
+    outFile << size << std::endl;
+
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            outFile << matrix[i][j] << " ";
+        }
+        outFile << std::endl;
+    }
+
+    outFile.close();
+}
+
+void mul_matrix(const std::string& path_to_matrix1, const std::string& path_to_matrix2, const std::string& path_to_result_matrix) {
+    int size1, size2;
+    int** matrix1 = nullptr;
+    readMatrixFromFile(path_to_matrix1, matrix1, size1);
+
+    int** matrix2 = nullptr;
+    readMatrixFromFile(path_to_matrix2, matrix2, size2);
+
+    if (size1 != size2) {
+        std::cerr << "Sizes do not match!" << std::endl;
+        for (int i = 0; i < size1; ++i) delete[] matrix1[i];
+        for (int i = 0; i < size2; ++i) delete[] matrix2[i];
+        delete[] matrix1;
+        delete[] matrix2;
+        return;
+    }
+
+    int size = size1;
+
+
+    int** resultMatrix = new int* [size];
+    for (int i = 0; i < size; ++i) {
+        resultMatrix[i] = new int[size];
+    }
+
+    int count = 100;
+    unsigned int start_time = clock();
+    for (int _count = 0; _count < count; _count++) {
+
+        #pragma omp parallel for shared(matrix1, matrix2, resultMatrix) schedule(static)
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                resultMatrix[i][j] = 0;
+                for (int k = 0; k < size; ++k) {
+                    resultMatrix[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+    }
+    unsigned int end_time = clock();
+
+    std::cout << "Time for " << size << "x" << size << " = " << (end_time - start_time)/count << "ms" << std::endl;
+    writeMatrixToFile(path_to_result_matrix, resultMatrix, size);
+
+    for (int i = 0; i < size; ++i) {
+        delete[] matrix1[i];
+        delete[] matrix2[i];
+        delete[] resultMatrix[i];
+    }
+    delete[] matrix1;
+    delete[] matrix2;
+    delete[] resultMatrix;
+
+    std::cout << "Complete " << size << "x" << size << "!" << std::endl << std::endl;
+}
+
+int main()
+{
+#ifdef _OPENMP
+	std::cout
+		<< "OpenMP Version: "
+		<< _OPENMP / 100 << " (" << _OPENMP % 100 << ")" << std::endl;
+	std::cout
+		<< "Processors: " << omp_get_num_procs()
+		<< ", Max threads: " << omp_get_max_threads()
+		<< std::endl;
+#else
+	std::cout << "Sequential Version" << std::endl << std::endl;
+#endif
+    std::cout << "Starting:" << std::endl << std::endl;
+    mul_matrix("../../matrix/matrix10_1.txt", "../../matrix/matrix10_2.txt", "../../matrix/matrix10_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix50_1.txt", "../../matrix/matrix50_2.txt", "../../matrix/matrix50_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix100_1.txt", "../../matrix/matrix100_2.txt", "../../matrix/matrix100_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix250_1.txt", "../../matrix/matrix250_2.txt", "../../matrix/matrix250_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix500_1.txt", "../../matrix/matrix500_2.txt", "../../matrix/matrix500_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix750_1.txt", "../../matrix/matrix750_2.txt", "../../matrix/matrix750_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix1000_1.txt", "../../matrix/matrix1000_2.txt", "../../matrix/matrix1000_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix1250_1.txt", "../../matrix/matrix1250_2.txt", "../../matrix/matrix1250_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix1500_1.txt", "../../matrix/matrix1500_2.txt", "../../matrix/matrix1500_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix1750_1.txt", "../../matrix/matrix1750_2.txt", "../../matrix/matrix1750_result_OpenMP.txt");
+    mul_matrix("../../matrix/matrix2000_1.txt", "../../matrix/matrix2000_2.txt", "../../matrix/matrix2000_result_OpenMP.txt");
+}
