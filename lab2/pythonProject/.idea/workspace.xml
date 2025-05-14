@@ -1,8 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="074cf376-5be1-4f70-9a44-e3e9f0ccb197" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../create_matrix/create_matrix/create.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../create_matrix/create_matrix/create.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/check_result_OpenMP.py" beforeDir="false" afterPath="$PROJECT_DIR$/check_result_OpenMP.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../lab3/lab3_MPI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../../lab3/lab3_MPI.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1000_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1000_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1000_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1000_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1000_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1000_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1000_result_MPI.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1000_result_MPI.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix100_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix100_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix100_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix100_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix100_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix100_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix100_result_MPI.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix100_result_MPI.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix10_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix10_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix10_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix10_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix10_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix10_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix10_result_MPI.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1250_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1250_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1250_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1250_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1250_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1250_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1250_result_MPI.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1500_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1500_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1500_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1500_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1500_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1500_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1500_result_MPI.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1500_result_MPI.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1750_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1750_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1750_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1750_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1750_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix1750_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix1750_result_MPI.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix2000_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix2000_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix2000_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix2000_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix2000_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix2000_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix250_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix250_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix250_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix250_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix250_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix250_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix250_result_MPI.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix500_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix500_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix500_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix500_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix500_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix500_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix500_result_MPI.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix500_result_MPI.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix50_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix50_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix50_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix50_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix50_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix50_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix50_result_MPI.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix750_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix750_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix750_2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix750_2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix750_result_CUDA.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../matrix/matrix750_result_CUDA.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../matrix/matrix750_result_MPI.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,13 +88,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.check_result_OpenMP.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.check_result_OpenMP.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

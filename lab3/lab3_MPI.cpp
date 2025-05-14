@@ -8,9 +8,6 @@
 using namespace std;
 using namespace std::chrono;
 
-
-using namespace std;
-
 void readMatrixFromFile(const std::string& filename, int*& matrix, int& size) {
     std::ifstream inFile(filename);
     if (!inFile) {
@@ -46,7 +43,7 @@ void writeMatrixToFile(const std::string& filename, int* matrix, int size) {
     outFile.close();
 }
 
-void Flip(int*& B, int dim) {
+void Flip(int* B, int dim) {
     for (int i = 0; i < dim; ++i) {
         for (int j = i + 1; j < dim; ++j) {
             std::swap(B[i * dim + j], B[j * dim + i]);
@@ -54,36 +51,42 @@ void Flip(int*& B, int dim) {
     }
 }
 
-void MatrixMultiplicationMPI(int* A, int* B, int* C, int Size, int ProcNum, int ProcRank) {
+long long MatrixMultiplicationMPI(int* A, int* B, int* C, int Size, int ProcNum, int ProcRank) {
     int dim = Size;
     int ProcPartSize = dim / ProcNum;
     int ProcPartElem = ProcPartSize * dim;
 
     int* bufA = new int[ProcPartElem];
-    int* bufB = new int[ProcPartElem];
-    int* bufC = new int[dim * dim]();
+    int* bufC = new int[ProcPartElem];
 
     MPI_Scatter(A, ProcPartElem, MPI_INT, bufA, ProcPartElem, MPI_INT, 0, MPI_COMM_WORLD);
-    MPI_Scatter(B, ProcPartElem, MPI_INT, bufB, ProcPartElem, MPI_INT, 0, MPI_COMM_WORLD);
+
+    MPI_Barrier(MPI_COMM_WORLD);
+    auto start = high_resolution_clock::now();
 
     for (int i = 0; i < ProcPartSize; ++i) {
         for (int j = 0; j < dim; ++j) {
             int temp = 0;
-            for (int k = 0; k < ProcPartSize; ++k) {
-                temp += bufA[i * dim + k] * bufB[k * dim + j];
+            for (int k = 0; k < dim; ++k) {
+                temp += bufA[i * dim + k] * B[j * dim + k];  // B уже транспонирована
             }
             bufC[i * dim + j] = temp;
         }
     }
 
+    MPI_Barrier(MPI_COMM_WORLD);
+    auto end = high_resolution_clock::now();
+    long long duration_ms = duration_cast<milliseconds>(end - start).count();
+
     MPI_Gather(bufC, ProcPartElem, MPI_INT, C, ProcPartElem, MPI_INT, 0, MPI_COMM_WORLD);
 
     delete[] bufA;
-    delete[] bufB;
     delete[] bufC;
+
+    return duration_ms;
 }
 
-void mul_matrix(const std::string& path1, const std::string& path2, const std::string& result_path) {
+long long mul_matrix(const std::string& path1, const std::string& path2, const std::string& result_path) {
     int ProcNum, ProcRank;
     MPI_Comm_size(MPI_COMM_WORLD, &ProcNum);
     MPI_Comm_rank(MPI_COMM_WORLD, &ProcRank);
@@ -101,22 +104,19 @@ void mul_matrix(const std::string& path1, const std::string& path2, const std::s
             delete[] A;
             delete[] B;
             MPI_Abort(MPI_COMM_WORLD, 1);
-            return;
         }
 
         size = size1;
-        C = new int[size * size]();
 
         if (size % ProcNum != 0) {
             std::cerr << "Matrix size must be divisible by number of processes!" << std::endl;
             delete[] A;
             delete[] B;
-            delete[] C;
             MPI_Abort(MPI_COMM_WORLD, 1);
-            return;
         }
 
-        Flip(B, size);
+        C = new int[size * size];
+        Flip(B, size);  // Транспонируем B один раз
     }
 
     MPI_Bcast(&size, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -124,24 +124,31 @@ void mul_matrix(const std::string& path1, const std::string& path2, const std::s
     if (ProcRank != 0) {
         A = new int[size * size];
         B = new int[size * size];
+        C = new int[size * size];  // Только чтобы передать указатель (не используется)
     }
 
-    MatrixMultiplicationMPI(A, B, C, size, ProcNum, ProcRank);
+    // Рассылаем A и B
+    MPI_Bcast(A, size * size, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Bcast(B, size * size, MPI_INT, 0, MPI_COMM_WORLD);
+
+    long long duration = MatrixMultiplicationMPI(A, B, C, size, ProcNum, ProcRank);
 
     if (ProcRank == 0) {
         writeMatrixToFile(result_path, C, size);
-        delete[] A;
-        delete[] B;
-        delete[] C;
     }
+
+    delete[] A;
+    delete[] B;
+    if (ProcRank == 0) delete[] C;
+
+    return duration;
 }
 
 int main(int argc, char** argv) {
     MPI_Init(&argc, &argv);
 
-    const std::vector<std::string> sizes = { "10", "50", "100", "250", "500",
-                                           "750", "1000", "1250", "1500", "1750", "2000" };
-    const int NUM_RUNS = 10; 
+    const std::vector<std::string> sizes = { "100", "200", "300", "400", "500", "1000", "1500", "2000" };
+    const int NUM_RUNS = 10;
 
     int ProcRank;
     MPI_Comm_rank(MPI_COMM_WORLD, &ProcRank);
@@ -151,26 +158,15 @@ int main(int argc, char** argv) {
         std::string path2 = "../matrix/matrix" + size + "_2.txt";
         std::string result_path = "../matrix/matrix" + size + "_result_MPI.txt";
 
-        vector<long long> durations; 
+        vector<long long> durations;
         durations.reserve(NUM_RUNS);
 
         for (int run = 0; run < NUM_RUNS; ++run) {
-            MPI_Barrier(MPI_COMM_WORLD);
-
-            high_resolution_clock::time_point start;
-            if (ProcRank == 0) {
-                start = high_resolution_clock::now();
-            }
-
-            mul_matrix(path1, path2, result_path);
+            long long duration = mul_matrix(path1, path2, result_path);
 
             if (ProcRank == 0) {
-                auto end = high_resolution_clock::now();
-                auto duration = duration_cast<milliseconds>(end - start);
-                durations.push_back(duration.count());
-
-                cout << "Size " << size << ", run " << run + 1 << ": "
-                    << duration.count() << " ms" << endl;
+                durations.push_back(duration);
+                cout << "Size " << size << ", run " << run + 1 << ": " << duration << " ms" << endl;
             }
         }
 
@@ -179,7 +175,7 @@ int main(int argc, char** argv) {
             double average = static_cast<double>(sum) / NUM_RUNS;
 
             cout << "----------------------------------------" << endl;
-            cout << "Matrix size " << size << " average time: "
+            cout << "Matrix size " << size << " average multiplication time: "
                 << average << " ms (over " << NUM_RUNS << " runs)" << endl;
             cout << "----------------------------------------" << endl;
 
